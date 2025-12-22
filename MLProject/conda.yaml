@@ -1,0 +1,13 @@
+name: smsml-ci
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12.7
+  - pip
+  - pip:
+      - mlflow==2.19.0
+      - numpy==2.2.1
+      - pandas
+      - scikit-learn==1.6.0
+      - matplotlib
+      - joblib
