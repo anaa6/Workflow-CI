@@ -27,8 +27,8 @@ jobs:
 
       - name: Set MLflow tracking URI (absolute file store)
         run: |
+          rm -rf "${{ github.workspace }}/mlruns"
           echo "MLFLOW_TRACKING_URI=file:${{ github.workspace }}/mlruns" >> $GITHUB_ENV
-          mkdir -p "${{ github.workspace }}/mlruns"
 
       - name: Run MLflow Project (training)
         id: train
