@@ -25,9 +25,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install mlflow==2.19.0 numpy==2.2.1 pandas scikit-learn==1.6.0 matplotlib joblib
 
-      - name: Set MLflow tracking URI (local file store)
+      - name: Set MLflow tracking URI (absolute file store)
         run: |
-          echo "MLFLOW_TRACKING_URI=file:./mlruns" >> $GITHUB_ENV
+          echo "MLFLOW_TRACKING_URI=file:${{ github.workspace }}/mlruns" >> $GITHUB_ENV
+          mkdir -p "${{ github.workspace }}/mlruns"
 
       - name: Run MLflow Project (training)
         id: train
