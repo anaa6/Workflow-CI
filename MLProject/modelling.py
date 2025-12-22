@@ -5,6 +5,7 @@ import pandas as pd
 import mlflow
 import mlflow.sklearn
 
+from mlflow.models.signature import infer_signature
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, f1_score, roc_auc_score, log_loss
@@ -44,7 +45,13 @@ def main(data_path: str):
         mlflow.log_metric("test_roc_auc", float(roc_auc_score(y_test, y_proba)))
         mlflow.log_metric("test_log_loss", float(log_loss(y_test, y_proba)))
 
-        mlflow.sklearn.log_model(model, artifact_path="model")
+        signature = infer_signature(X_test, model.predict(X_test))
+        mlflow.sklearn.log_model(
+            model,
+            artifact_path="model",
+            signature=signature,
+            input_example=X_test.iloc[:3],
+        )
 
         run_id = mlflow.active_run().info.run_id
         print(f"Run ID: {run_id}")
